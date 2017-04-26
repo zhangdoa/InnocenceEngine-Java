@@ -1,4 +1,4 @@
-package com.base.engine.audio;
+package com.base.engine.core;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.openal.AL;

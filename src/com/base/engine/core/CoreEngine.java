@@ -1,6 +1,5 @@
 package com.base.engine.core;
 
-import com.base.engine.audio.AudioEngine;
 import com.base.engine.rendering.Window;
 
 public class CoreEngine
@@ -77,8 +76,9 @@ public class CoreEngine
 				}
 
 				game.input((float) frameTime);
-				Input.update();
+				renderingEngine.input((float) frameTime);
 
+				Input.update();
 				game.update((float) frameTime);
 
 				if(frameConter >= 1.0)

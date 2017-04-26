@@ -4,7 +4,6 @@ import com.base.engine.audio.AudioSource;
 import com.base.engine.audio.Listener;
 import com.base.engine.core.Game;
 import com.base.engine.core.GameObject;
-import com.base.engine.core.Input;
 import com.base.engine.math.Vector2f;
 import com.base.engine.math.Vector3f;
 import com.base.engine.rendering.Attenuation;
@@ -16,8 +15,7 @@ import com.base.engine.rendering.SpotLight;
 import com.base.engine.rendering.Texture;
 import com.base.engine.rendering.Vertex;
 
-public class TestGame extends Game
-{
+public class TestGame extends Game {
 	private GameObject planeObject;
 
 	PointLight pLight1 = new PointLight(new BaseLight(new Vector3f(1.0f, 0.5f, 0), 0.8f), new Attenuation(0, 0, 1),
@@ -28,10 +26,9 @@ public class TestGame extends Game
 	SpotLight sLight1 = new SpotLight(new PointLight(new BaseLight(new Vector3f(0, 1.0f, 1.0f), 0.8f),
 			new Attenuation(0, 0, 0.1f), new Vector3f(-2, 0, 5f), 30.0f), new Vector3f(1, 1, 1), 0.7f);
 
-	public void init()
-	{
+	@Override
+	public void init() {
 		// Mesh mesh = new Mesh("deer.obj");
-		// camera = new Camera();
 		planeObject = new GameObject();
 
 		float fieldDepth = 10.0f;
@@ -56,17 +53,6 @@ public class TestGame extends Game
 
 		audioSource.play("ShortAmb.wav");
 		// audioSource.play("Fall.wav");
-		float pitchmod = 1.0f;
-		if(Input.getKey(Input.KEY_UP))
-		{
-			pitchmod += 0.05f;
-			audioSource.setPitchModulator(pitchmod);
-		}
-		if(Input.getKey(Input.KEY_DOWN))
-		{
-			pitchmod -= 0.05f;
-			audioSource.setPitchModulator(pitchmod);
-		}
 
 		// Transform.setCamera(camera);
 		// PhongShader.setAmbientLight(new Vector3f(0.1f, 0.1f, 0.1f));

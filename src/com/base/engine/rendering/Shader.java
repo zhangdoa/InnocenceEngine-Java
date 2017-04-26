@@ -6,6 +6,7 @@ import static org.lwjgl.opengl.GL20.GL_LINK_STATUS;
 import static org.lwjgl.opengl.GL20.GL_VALIDATE_STATUS;
 import static org.lwjgl.opengl.GL20.GL_VERTEX_SHADER;
 import static org.lwjgl.opengl.GL20.glAttachShader;
+import static org.lwjgl.opengl.GL20.glBindAttribLocation;
 import static org.lwjgl.opengl.GL20.glCompileShader;
 import static org.lwjgl.opengl.GL20.glCreateProgram;
 import static org.lwjgl.opengl.GL20.glCreateShader;
@@ -34,40 +35,32 @@ import com.base.engine.math.Matrix4f;
 import com.base.engine.math.Transform;
 import com.base.engine.math.Vector3f;
 
-public class Shader
-{
+public class Shader {
 	private RenderingEngine renderingEngine;
 	private int program;
 	private HashMap<String, Integer> uniforms;
 
-	public Shader()
-	{
+	public Shader() {
 		program = glCreateProgram();
 		uniforms = new HashMap<String, Integer>();
 
-		if(program == 0)
-		{
+		if (program == 0) {
 			System.err.println("Shader creation failed: memory location invaild");
 			System.exit(1);
 		}
 	}
 
-	private static String loadShader(String fileName)
-	{
+	private static String loadShader(String fileName) {
 		StringBuilder shaderSource = new StringBuilder();
 		BufferedReader shaderReader = null;
 
-		try
-		{
+		try {
 			shaderReader = new BufferedReader(new FileReader("./res/shaders/" + fileName));
 			String line;
-			while((line = shaderReader.readLine()) != null)
-			{
+			while ((line = shaderReader.readLine()) != null) {
 				shaderSource.append(line).append("\n");
 			}
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(1);
 		}
@@ -75,22 +68,18 @@ public class Shader
 		return shaderSource.toString();
 	}
 
-	public void bind()
-	{
+	public void bind() {
 		glUseProgram(program);
 	}
 
-	public void updateUniforms(Transform transform, Material material)
-	{
+	public void updateUniforms(Transform transform, Material material) {
 
 	}
 
-	public void addUniform(String uniform)
-	{
+	public void addUniform(String uniform) {
 		int uniformLocation = glGetUniformLocation(program, uniform);
 
-		if(uniformLocation == 0xFFFFFFFF)
-		{
+		if (uniformLocation == 0xFFFFFFFF) {
 			System.err.println("Error : Uniform lost: " + uniform);
 			new Exception().printStackTrace();
 			System.exit(1);
@@ -99,60 +88,53 @@ public class Shader
 		uniforms.put(uniform, uniformLocation);
 	}
 
-	public void addVertexShaderFromFile(String text)
-	{
+	public void addVertexShaderFromFile(String text) {
 		addProgram(loadShader(text), GL_VERTEX_SHADER);
 	}
 
-	public void addGeometryShaderFromFile(String text)
-	{
+	public void addGeometryShaderFromFile(String text) {
 		addProgram(loadShader(text), GL_GEOMETRY_SHADER);
 	}
 
-	public void addFragmentShaderFromFile(String text)
-	{
+	public void addFragmentShaderFromFile(String text) {
 		addProgram(loadShader(text), GL_FRAGMENT_SHADER);
 	}
 
-	public void addVertexShader(String text)
-	{
+	public void addVertexShader(String text) {
 		addProgram(text, GL_VERTEX_SHADER);
 	}
 
-	public void addGeometryShader(String text)
-	{
+	public void addGeometryShader(String text) {
 		addProgram(text, GL_GEOMETRY_SHADER);
 	}
 
-	public void addFragmentShader(String text)
-	{
+	public void addFragmentShader(String text) {
 		addProgram(text, GL_FRAGMENT_SHADER);
 	}
 
-	public void compileShader()
-	{
+	public void setAttribLocation(String attributeName, int location) {
+		glBindAttribLocation(program, location, attributeName);
+	}
+
+	public void compileShader() {
 		glLinkProgram(program);
-		if(glGetProgram(program, GL_LINK_STATUS) == 0)
-		{
+		if (glGetProgram(program, GL_LINK_STATUS) == 0) {
 			System.err.println(glGetProgramInfoLog(program, 1024));
 			System.exit(1);
 		}
 
 		glValidateProgram(program);
 
-		if(glGetProgram(program, GL_VALIDATE_STATUS) == 0)
-		{
+		if (glGetProgram(program, GL_VALIDATE_STATUS) == 0) {
 			System.err.println(glGetProgramInfoLog(program, 1024));
 			System.exit(1);
 		}
 	}
 
-	public void addProgram(String text, int type)
-	{
+	public void addProgram(String text, int type) {
 		int shader = glCreateShader(type);
 
-		if(shader == 0)
-		{
+		if (shader == 0) {
 			System.err.println("Shader creation failed: memory location invaild when adding shader");
 			System.exit(1);
 		}
@@ -160,8 +142,7 @@ public class Shader
 		glShaderSource(shader, text);
 		glCompileShader(shader);
 
-		if(glGetShader(shader, GL_COMPILE_STATUS) == 0)
-		{
+		if (glGetShader(shader, GL_COMPILE_STATUS) == 0) {
 			System.err.println(glGetShaderInfoLog(shader, 1024));
 			System.exit(1);
 		}
@@ -169,33 +150,27 @@ public class Shader
 		glAttachShader(program, shader);
 	}
 
-	public void setUniformi(String uniformName, int value)
-	{
+	public void setUniformi(String uniformName, int value) {
 		glUniform1i(uniforms.get(uniformName), value);
 	}
 
-	public void setUniformf(String uniformName, float value)
-	{
+	public void setUniformf(String uniformName, float value) {
 		glUniform1f(uniforms.get(uniformName), value);
 	}
 
-	public void setUniform(String uniformName, Vector3f value)
-	{
+	public void setUniform(String uniformName, Vector3f value) {
 		glUniform3f(uniforms.get(uniformName), value.getX(), value.getY(), value.getZ());
 	}
 
-	public void setUniform(String uniformName, Matrix4f value)
-	{
+	public void setUniform(String uniformName, Matrix4f value) {
 		glUniformMatrix4(uniforms.get(uniformName), true, Util.createFlippedBuffer(value));
 	}
 
-	public void setRenderingEngine(RenderingEngine renderingEngine)
-	{
+	public void setRenderingEngine(RenderingEngine renderingEngine) {
 		this.renderingEngine = renderingEngine;
 	}
 
-	public RenderingEngine getRenderingEngine()
-	{
+	public RenderingEngine getRenderingEngine() {
 		return renderingEngine;
 	}
 }

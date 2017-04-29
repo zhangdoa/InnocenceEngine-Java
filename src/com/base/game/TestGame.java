@@ -1,7 +1,5 @@
 package com.base.game;
 
-import com.base.engine.audio.AudioSource;
-import com.base.engine.audio.Listener;
 import com.base.engine.core.Game;
 import com.base.engine.core.GameObject;
 import com.base.engine.math.Vector2f;
@@ -48,10 +46,10 @@ public class TestGame extends Game {
 		planeObject.getTransform().setPos(0, -1, 5);
 		getRootObject().addChind(planeObject);
 
-		Listener listener = new Listener();
-		AudioSource audioSource = new AudioSource();
-
-		audioSource.play("ShortAmb.wav");
+		// Listener listener = new Listener();
+		// AudioSource audioSource = new AudioSource();
+		//
+		// audioSource.play("ShortAmb.wav");
 		// audioSource.play("Fall.wav");
 
 		// Transform.setCamera(camera);

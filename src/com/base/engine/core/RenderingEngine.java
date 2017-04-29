@@ -1,17 +1,24 @@
 package com.base.engine.core;
 
 import static org.lwjgl.opengl.GL11.GL_BACK;
+import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
 import static org.lwjgl.opengl.GL11.GL_CW;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_EQUAL;
+import static org.lwjgl.opengl.GL11.GL_LESS;
+import static org.lwjgl.opengl.GL11.GL_ONE;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.GL_VERSION;
 import static org.lwjgl.opengl.GL11.glBindTexture;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glCullFace;
+import static org.lwjgl.opengl.GL11.glDepthFunc;
+import static org.lwjgl.opengl.GL11.glDepthMask;
 import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glFrontFace;
@@ -19,14 +26,19 @@ import static org.lwjgl.opengl.GL11.glGetString;
 import static org.lwjgl.opengl.GL32.GL_DEPTH_CLAMP;
 
 import com.base.engine.math.Vector3f;
+import com.base.engine.rendering.BaseLight;
 import com.base.engine.rendering.Camera;
+import com.base.engine.rendering.DirectionalLight;
 import com.base.engine.rendering.ForwardAmbient;
+import com.base.engine.rendering.ForwardDirectional;
 import com.base.engine.rendering.Shader;
 import com.base.engine.rendering.Window;
 
 public class RenderingEngine {
 	private Camera mainCamera;
 	private Vector3f ambientLight;
+	private DirectionalLight directionalLight;
+	private DirectionalLight directionalLight2;
 
 	public RenderingEngine() {
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -41,6 +53,8 @@ public class RenderingEngine {
 		mainCamera = new Camera((float) Math.toRadians(70.0f), (float) Window.getWidth() / (float) Window.getHeight(),
 				0.1f, 1000);
 		ambientLight = new Vector3f(0.2f, 0.2f, 0.2f);
+		directionalLight = new DirectionalLight(new BaseLight(new Vector3f(0, 0, 1), 0.4f), new Vector3f(1, 1, 1));
+		directionalLight2 = new DirectionalLight(new BaseLight(new Vector3f(1, 0, 0), 0.4f), new Vector3f(-1, 1, -1));
 	}
 
 	public Vector3f getAmbientLight() {
@@ -54,8 +68,25 @@ public class RenderingEngine {
 	public void render(GameObject object) {
 		clearScreen();
 		Shader forwardAmbient = ForwardAmbient.getInstance();
+		Shader forwardDirectional = ForwardDirectional.getInstance();
 		forwardAmbient.setRenderingEngine(this);
+		forwardDirectional.setRenderingEngine(this);
 		object.render(forwardAmbient);
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_ONE, GL_ONE);
+		glDepthMask(false);
+		glDepthFunc(GL_EQUAL);
+
+		object.render(forwardDirectional);
+
+		DirectionalLight temp = directionalLight;
+		directionalLight = directionalLight2;
+		directionalLight2 = temp;
+		object.render(forwardDirectional);
+		glDepthFunc(GL_LESS);
+		glDepthMask(true);
+		glDisable(GL_BLEND);
 	}
 
 	private void clearScreen() {
@@ -88,6 +119,10 @@ public class RenderingEngine {
 
 	public void setMainCamera(Camera mainCamera) {
 		this.mainCamera = mainCamera;
+	}
+
+	public DirectionalLight getDirectionalLight() {
+		return directionalLight;
 	}
 
 }

@@ -3,15 +3,14 @@ package com.base.engine.audio;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+
+import org.newdawn.slick.openal.WaveData;
+
+import com.base.engine.math.Vector3f;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.openal.AL10;
-import org.newdawn.slick.openal.WaveData;
-
-import com.base.engine.core.Input;
-import com.base.engine.math.Vector3f;
 
 public class AudioSource {
 	private IntBuffer buffer;
@@ -21,8 +20,8 @@ public class AudioSource {
 	public float pitchModulator;
 	public int loop;
 
-	public Vector3f sourcePos;
-	public Vector3f sourceVel;
+	public Vector3f pos;
+	public Vector3f vel;
 
 	public AudioSource() {
 		buffer = BufferUtils.createIntBuffer(1);
@@ -34,8 +33,8 @@ public class AudioSource {
 		gainModulator = 1.0f;
 		pitchModulator = 1.0f;
 		loop = 1;
-		sourcePos = new Vector3f(0.0f, 0.0f, 0.0f);
-		sourceVel = new Vector3f(0.0f, 0.0f, 0.0f);
+		pos = new Vector3f(0.0f, 0.0f, 0.0f);
+		vel = new Vector3f(0.0f, 0.0f, 0.0f);
 
 		initSource();
 
@@ -44,10 +43,8 @@ public class AudioSource {
 	private void initSource() {
 		AL10.alSourcef(source.get(0), AL10.AL_GAIN, gainModulator);
 		AL10.alSourcef(source.get(0), AL10.AL_PITCH, pitchModulator);
-		AL10.alSource(source.get(0), AL10.AL_POSITION, (FloatBuffer) BufferUtils.createFloatBuffer(3)
-				.put(new float[] { sourcePos.getX(), sourcePos.getY(), sourcePos.getZ() }).rewind());
-		AL10.alSource(source.get(0), AL10.AL_VELOCITY, (FloatBuffer) BufferUtils.createFloatBuffer(3)
-				.put(new float[] { sourceVel.getX(), sourceVel.getY(), sourceVel.getZ() }).rewind());
+		AL10.alSource3f(source.get(0), AL10.AL_POSITION, pos.getX(), pos.getY(), pos.getZ());
+		AL10.alSource3f(source.get(0), AL10.AL_VELOCITY, vel.getX(), vel.getY(), vel.getZ());
 		AL10.alSourcei(source.get(0), AL10.AL_LOOPING, loop);
 	}
 
@@ -95,8 +92,6 @@ public class AudioSource {
 
 	public void setPitchModulator(float pitchModulator) {
 		this.pitchModulator = pitchModulator;
-		// FIXME
-		// Unaffected
 		AL10.alSourcef(source.get(0), AL10.AL_PITCH, pitchModulator);
 	}
 
@@ -109,33 +104,22 @@ public class AudioSource {
 		AL10.alSourcei(source.get(0), AL10.AL_LOOPING, loop);
 	}
 
-	public Vector3f getSourcePos() {
-		return sourcePos;
+	public Vector3f getPos() {
+		return pos;
 	}
 
-	public void setSourcePos(Vector3f sourcePos) {
-		this.sourcePos = sourcePos;
+	public void setPos(Vector3f pos) {
+		this.pos = pos;
+		AL10.alSource3f(source.get(0), AL10.AL_POSITION, pos.getX(), pos.getY(), pos.getZ());
 	}
 
-	public Vector3f getSourceVel() {
-		return sourceVel;
+	public Vector3f getVel() {
+		return vel;
 	}
 
-	public void setSourceVel(Vector3f sourceVel) {
-		this.sourceVel = sourceVel;
+	public void setVel(Vector3f vel) {
+		this.vel = vel;
+		AL10.alSource3f(source.get(0), AL10.AL_VELOCITY, vel.getX(), vel.getY(), vel.getZ());
 	}
 
-	public void input() {
-		float pitchmod = 1.0f;
-		if (Input.getKey(Input.KEY_UP)) {
-			pitchmod += 0.1f;
-			this.setPitchModulator(0.5f);
-			System.out.println("pitch shift up");
-		}
-		if (Input.getKey(Input.KEY_DOWN)) {
-			pitchmod -= 0.1f;
-			this.setPitchModulator(pitchmod);
-			System.out.println("pitch shift down");
-		}
-	}
 }

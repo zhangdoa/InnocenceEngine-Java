@@ -46,12 +46,6 @@ public class TestGame extends Game {
 		planeObject.getTransform().setPos(0, -1, 5);
 		getRootObject().addChind(planeObject);
 
-		// Listener listener = new Listener();
-		// AudioSource audioSource = new AudioSource();
-		//
-		// audioSource.play("ShortAmb.wav");
-		// audioSource.play("Fall.wav");
-
 		// Transform.setCamera(camera);
 		// PhongShader.setAmbientLight(new Vector3f(0.1f, 0.1f, 0.1f));
 		// PhongShader.setDirectionalLight(

@@ -2,8 +2,7 @@ package com.base.engine.core;
 
 import com.base.engine.rendering.Window;
 
-public class CoreEngine
-{
+public class CoreEngine {
 	private boolean isRunning;
 	private Game game;
 	private int width;
@@ -12,40 +11,33 @@ public class CoreEngine
 	private RenderingEngine renderingEngine;
 	private AudioEngine audioEngine;
 
-	public CoreEngine(double framerate, Game game)
-	{
+	public CoreEngine(double framerate, Game game) {
 		this.isRunning = false;
 		this.game = game;
 		this.frameTime = 1.0 / framerate;
-		this.audioEngine = new AudioEngine();
 
 	}
 
-	public void createWindow(int width, int height, String title)
-	{
+	public void createWindow(int width, int height, String title) {
 		Window.createWindow(width, height, title);
 		this.renderingEngine = new RenderingEngine();
+		this.audioEngine = new AudioEngine();
 	}
 
-	public void start()
-	{
-		if(!isRunning)
-		{
+	public void start() {
+		if (!isRunning) {
 			run();
 		}
 	}
 
-	public void stop()
-	{
-		if(isRunning)
-		{
+	public void stop() {
+		if (isRunning) {
 			isRunning = false;
 		}
 		return;
 	}
 
-	private void run()
-	{
+	private void run() {
 		isRunning = true;
 		int frames = 0;
 		long frameConter = 0;
@@ -53,8 +45,7 @@ public class CoreEngine
 		double lastTime = Time.getTime();
 		double unprocessedTime = 0;
 
-		while(isRunning)
-		{
+		while (isRunning) {
 			boolean render = false;
 
 			double startTime = Time.getTime();
@@ -64,25 +55,24 @@ public class CoreEngine
 			unprocessedTime += passedTime;
 			frameConter += passedTime;
 
-			while(unprocessedTime > frameTime)
-			{
+			while (unprocessedTime > frameTime) {
 				render = true;
 
 				unprocessedTime -= frameTime;
 
-				if(Window.isCloseRequested())
-				{
+				if (Window.isCloseRequested()) {
 					stop();
 				}
 
 				game.input((float) frameTime);
 				renderingEngine.input((float) frameTime);
+				audioEngine.input((float) frameTime);
 
 				Input.update();
 				game.update((float) frameTime);
+				audioEngine.update();
 
-				if(frameConter >= 1.0)
-				{
+				if (frameConter >= 1.0) {
 					System.out.println(frames);
 					frames = 0;
 					frameConter = 0;
@@ -90,20 +80,14 @@ public class CoreEngine
 
 			}
 
-			if(render)
-			{
+			if (render) {
 				renderingEngine.render(game.getRootObject());
 				Window.render();
 				frames++;
-			}
-			else
-			{
-				try
-				{
+			} else {
+				try {
 					Thread.sleep(1);
-				}
-				catch(InterruptedException e)
-				{
+				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
@@ -113,8 +97,7 @@ public class CoreEngine
 		cleanUp();
 	}
 
-	private void cleanUp()
-	{
+	private void cleanUp() {
 		Window.dispose();
 		AudioEngine.cleanUp();
 	}

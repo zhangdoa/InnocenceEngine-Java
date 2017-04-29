@@ -1,17 +1,23 @@
 package com.base.engine.core;
 
+import com.base.engine.audio.AudioSource;
+import com.base.engine.audio.Listener;
+import com.base.engine.math.Vector3f;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.openal.AL;
 
-public class AudioEngine
-{
+public class AudioEngine {
 	// lwjgl 3.x
 
 	// ALCdevice device;
 	// ALCcontext alContext;
 
-	public AudioEngine()
-	{
+	public Listener listener;
+
+	public AudioSource audioSource;
+
+	public AudioEngine() {
 
 		// lwjgl 3.x
 
@@ -23,19 +29,25 @@ public class AudioEngine
 		// ALCapabilities contextCaps = AL.createCapabilities(deviceCaps);
 
 		// lwjgl 2.x
-		try
-		{
+		try {
 			AL.create();
-		}
-		catch(LWJGLException le)
-		{
+		} catch (LWJGLException le) {
 			le.printStackTrace();
 			return;
 		}
+		Listener listener = new Listener();
+		listener.setPos(new Vector3f(0.0f, 0.0f, 0.0f));
+		AudioSource audioSource = new AudioSource();
+		audioSource.play("BMV1007.wav");
+		audioSource.setPos(new Vector3f(0.3f, 0.3f, 0.0f));
 	}
 
-	public static void cleanUp()
-	{
+	public void update() {
+		// TODO:audio source pos update
+
+	}
+
+	public static void cleanUp() {
 		// lwjgl 3.x
 
 		// alContext = (Long) null;
@@ -45,5 +57,9 @@ public class AudioEngine
 
 		// lwjgl 2.x
 		AL.destroy();
+	}
+
+	public void input(float delta) {
+
 	}
 }

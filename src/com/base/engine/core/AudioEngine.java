@@ -1,6 +1,5 @@
 package com.base.engine.core;
 
-import com.base.engine.audio.AudioSource;
 import com.base.engine.audio.Listener;
 import com.base.engine.math.Vector3f;
 
@@ -13,9 +12,7 @@ public class AudioEngine {
 	// ALCdevice device;
 	// ALCcontext alContext;
 
-	public Listener listener;
-
-	public AudioSource audioSource;
+	private Listener listener;
 
 	public AudioEngine() {
 
@@ -31,19 +28,18 @@ public class AudioEngine {
 		// lwjgl 2.x
 		try {
 			AL.create();
+
 		} catch (LWJGLException le) {
 			le.printStackTrace();
-			return;
+
 		}
-		Listener listener = new Listener();
-		listener.setPos(new Vector3f(0.0f, 0.0f, 0.0f));
-		AudioSource audioSource = new AudioSource();
-		audioSource.play("BMV1007.wav");
-		audioSource.setPos(new Vector3f(0.3f, 0.3f, 0.0f));
+		listener = new Listener();
+
 	}
 
-	public void update() {
-		// TODO:audio source pos update
+	public void update(Vector3f listenerPos) {
+		listener.setPos(listenerPos);
+		listener.update();
 
 	}
 

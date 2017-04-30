@@ -70,7 +70,6 @@ public class CoreEngine {
 
 				Input.update();
 				game.update((float) frameTime);
-				audioEngine.update();
 
 				if (frameConter >= 1.0) {
 					System.out.println(frames);
@@ -83,6 +82,7 @@ public class CoreEngine {
 			if (render) {
 				renderingEngine.render(game.getRootObject());
 				Window.render();
+				audioEngine.update(renderingEngine.getMainCamera().getPos());
 				frames++;
 			} else {
 				try {

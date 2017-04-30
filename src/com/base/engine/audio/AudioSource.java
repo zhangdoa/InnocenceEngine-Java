@@ -20,8 +20,8 @@ public class AudioSource {
 	public float pitchModulator;
 	public int loop;
 
-	public Vector3f pos;
-	public Vector3f vel;
+	private Vector3f pos;
+	private Vector3f vel;
 
 	public AudioSource() {
 		buffer = BufferUtils.createIntBuffer(1);

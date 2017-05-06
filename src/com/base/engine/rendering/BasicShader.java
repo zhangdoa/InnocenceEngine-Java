@@ -3,19 +3,16 @@ package com.base.engine.rendering;
 import com.base.engine.math.Matrix4f;
 import com.base.engine.math.Transform;
 
-public class BasicShader extends Shader
-{
+public class BasicShader extends Shader {
 	private static final BasicShader instance = new BasicShader();
 
 	public static BasicShader
 
-			getInstance()
-	{
+			getInstance() {
 		return instance;
 	}
 
-	private BasicShader()
-	{
+	private BasicShader() {
 		super();
 
 		addVertexShaderFromFile("basicVertex.sf");
@@ -26,8 +23,7 @@ public class BasicShader extends Shader
 		addUniform("color");
 	}
 
-	public void updateUniforms(Transform transform, Material material)
-	{
+	public void updateUniforms(Transform transform, Material material) {
 		Matrix4f worldMatrix = transform.getTransformation();
 		Matrix4f projectedMatrix = getRenderingEngine().getMainCamera().getViewProjection().mul(worldMatrix);
 		material.getTexture().bind();

@@ -4,10 +4,10 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
 
-import org.lwjgl.BufferUtils;
-
 import com.base.engine.math.Matrix4f;
 import com.base.engine.rendering.Vertex;
+
+import org.lwjgl.BufferUtils;
 
 public class Util {
 

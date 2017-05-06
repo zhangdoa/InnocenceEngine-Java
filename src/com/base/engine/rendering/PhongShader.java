@@ -4,8 +4,7 @@ import com.base.engine.math.Matrix4f;
 import com.base.engine.math.Transform;
 import com.base.engine.math.Vector3f;
 
-public class PhongShader extends Shader
-{
+public class PhongShader extends Shader {
 	private static final int MAX_POINT_LIGHTS = 4;
 	private static final int MAX_SPOT_LIGHTS = 4;
 
@@ -13,8 +12,7 @@ public class PhongShader extends Shader
 
 	public static PhongShader
 
-			getInstance()
-	{
+			getInstance() {
 		return instance;
 	}
 
@@ -25,8 +23,7 @@ public class PhongShader extends Shader
 	private static PointLight[] pointLights = new PointLight[] {};
 	private static SpotLight[] spotLights = new SpotLight[] {};
 
-	private PhongShader()
-	{
+	private PhongShader() {
 		super();
 
 		addVertexShaderFromFile("phongVertex.sf");
@@ -45,8 +42,7 @@ public class PhongShader extends Shader
 		addUniform("directionalLight.base.intensity");
 		addUniform("directionalLight.direction");
 
-		for(int i = 0; i < MAX_POINT_LIGHTS; i++)
-		{
+		for (int i = 0; i < MAX_POINT_LIGHTS; i++) {
 			addUniform("pointLights[" + i + "].base.color");
 			addUniform("pointLights[" + i + "].base.intensity");
 			addUniform("pointLights[" + i + "].atten.constant");
@@ -56,8 +52,7 @@ public class PhongShader extends Shader
 			addUniform("pointLights[" + i + "].range");
 		}
 
-		for(int i = 0; i < MAX_SPOT_LIGHTS; i++)
-		{
+		for (int i = 0; i < MAX_SPOT_LIGHTS; i++) {
 			addUniform("spotLights[" + i + "].pointLight.base.color");
 			addUniform("spotLights[" + i + "].pointLight.base.intensity");
 			addUniform("spotLights[" + i + "].pointLight.atten.constant");
@@ -70,8 +65,7 @@ public class PhongShader extends Shader
 		}
 	}
 
-	public void updateUniforms(Transform transform, Material material)
-	{
+	public void updateUniforms(Transform transform, Material material) {
 
 		Matrix4f worldMatrix = transform.getTransformation();
 		Matrix4f projectedMatrix = getRenderingEngine().getMainCamera().getViewProjection().mul(worldMatrix);
@@ -84,13 +78,11 @@ public class PhongShader extends Shader
 		setUniform("ambientLight", ambientLight);
 		setUniform("directionalLight", directionalLight);
 
-		for(int i = 0; i < pointLights.length; i++)
-		{
+		for (int i = 0; i < pointLights.length; i++) {
 			setUniform("pointLights[" + i + "]", pointLights[i]);
 		}
 
-		for(int i = 0; i < spotLights.length; i++)
-		{
+		for (int i = 0; i < spotLights.length; i++) {
 			setUniform("spotLights[" + i + "]", spotLights[i]);
 		}
 
@@ -101,25 +93,20 @@ public class PhongShader extends Shader
 
 	}
 
-	public static Vector3f getAmbientLight()
-	{
+	public static Vector3f getAmbientLight() {
 		return ambientLight;
 	}
 
-	public static void setAmbientLight(Vector3f ambientLight)
-	{
+	public static void setAmbientLight(Vector3f ambientLight) {
 		PhongShader.ambientLight = ambientLight;
 	}
 
-	public static void setDirectionalLight(DirectionalLight directionalLight)
-	{
+	public static void setDirectionalLight(DirectionalLight directionalLight) {
 		PhongShader.directionalLight = directionalLight;
 	}
 
-	public static void setPointLight(PointLight[] pointLights)
-	{
-		if(pointLights.length > MAX_POINT_LIGHTS)
-		{
+	public static void setPointLight(PointLight[] pointLights) {
+		if (pointLights.length > MAX_POINT_LIGHTS) {
 			System.err.println("Error: Too much point lights.");
 			new Exception().printStackTrace();
 			System.exit(1);
@@ -129,10 +116,8 @@ public class PhongShader extends Shader
 
 	}
 
-	public static void setSpotLight(SpotLight[] spotLights)
-	{
-		if(spotLights.length > MAX_SPOT_LIGHTS)
-		{
+	public static void setSpotLight(SpotLight[] spotLights) {
+		if (spotLights.length > MAX_SPOT_LIGHTS) {
 			System.err.println("Error: Too much spot lights.");
 			new Exception().printStackTrace();
 			System.exit(1);
@@ -140,20 +125,17 @@ public class PhongShader extends Shader
 		PhongShader.spotLights = spotLights;
 	}
 
-	public void setUniform(String uniformName, BaseLight baseLight)
-	{
+	public void setUniform(String uniformName, BaseLight baseLight) {
 		setUniform(uniformName + ".color", baseLight.getColor());
 		setUniformf(uniformName + ".intensity", baseLight.getIntensity());
 	}
 
-	public void setUniform(String uniformName, DirectionalLight directionalLight)
-	{
+	public void setUniform(String uniformName, DirectionalLight directionalLight) {
 		setUniform(uniformName + ".base", directionalLight.getBase());
 		setUniform(uniformName + ".direction", directionalLight.getDirection());
 	}
 
-	public void setUniform(String uniformName, PointLight pointLight)
-	{
+	public void setUniform(String uniformName, PointLight pointLight) {
 		setUniform(uniformName + ".base", pointLight.getBaseLight());
 		setUniformf(uniformName + ".atten.constant", pointLight.getAtten().getConstant());
 		setUniformf(uniformName + ".atten.linear", pointLight.getAtten().getLinear());
@@ -162,8 +144,7 @@ public class PhongShader extends Shader
 		setUniformf(uniformName + ".range", pointLight.getRange());
 	}
 
-	public void setUniform(String uniformName, SpotLight spotLight)
-	{
+	public void setUniform(String uniformName, SpotLight spotLight) {
 		setUniform(uniformName + ".pointLight", spotLight.getPointLight());
 		setUniform(uniformName + ".direction", spotLight.getDirection());
 		setUniformf(uniformName + ".cutoff", spotLight.getCutoff());

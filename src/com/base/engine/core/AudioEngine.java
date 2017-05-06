@@ -37,8 +37,10 @@ public class AudioEngine {
 
 	}
 
-	public void update(Vector3f listenerPos) {
+	public void update(Vector3f listenerPos, Vector3f listenerOriForward, Vector3f listenerOriUp) {
 		listener.setPos(listenerPos);
+		listener.setOriForward(listenerOriForward);
+		listener.setOriUp(listenerOriUp);
 		listener.update();
 
 	}

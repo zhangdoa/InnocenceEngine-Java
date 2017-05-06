@@ -10,7 +10,7 @@ import org.lwjgl.openal.AL10;
 public class Listener {
 	private Vector3f pos;
 	private Vector3f vel;
-	private Vector3f oriAt;
+	private Vector3f oriForward;
 	private Vector3f oriUp;
 
 	public Listener()
@@ -18,7 +18,7 @@ public class Listener {
 	{
 		pos = new Vector3f(0.0f, 0.0f, 0.0f);
 		vel = new Vector3f(0.0f, 0.0f, 0.0f);
-		oriAt = new Vector3f(0.0f, 0.0f, -1.0f);
+		oriForward = new Vector3f(0.0f, 0.0f, -1.0f);
 		oriUp = new Vector3f(0.0f, 1.0f, 0.0f);
 		update();
 
@@ -27,14 +27,9 @@ public class Listener {
 	public void update() {
 		AL10.alListener3f(AL10.AL_POSITION, pos.getX(), pos.getY(), pos.getZ());
 		AL10.alListener3f(AL10.AL_VELOCITY, vel.getX(), vel.getY(), vel.getZ());
-		/**
-		 * Orientation of the listener. (first 3 elements are "at", second 3 are
-		 * "up")
-		 */
-
-		AL10.alListener(AL10.AL_ORIENTATION, (FloatBuffer) BufferUtils.createFloatBuffer(6)
-				.put(new float[] { oriAt.getX(), oriAt.getY(), oriAt.getZ(), oriUp.getX(), oriUp.getY(), oriUp.getZ() })
-				.rewind());
+		AL10.alListener(AL10.AL_ORIENTATION,
+				(FloatBuffer) BufferUtils.createFloatBuffer(6).put(new float[] { oriForward.getX(), oriForward.getY(),
+						oriForward.getZ(), oriUp.getX(), oriUp.getY(), oriUp.getZ() }).rewind());
 	}
 
 	public Vector3f getPos() {
@@ -53,13 +48,13 @@ public class Listener {
 		this.vel = vel;
 	}
 
-	public Vector3f getOriAt() {
-		return oriAt;
+	public Vector3f getOriForward() {
+		return oriForward;
 
 	}
 
-	public void setOriAt(Vector3f oriAt) {
-		this.oriAt = oriAt;
+	public void setOriForward(Vector3f oriForward) {
+		this.oriForward = oriForward;
 	}
 
 	public Vector3f getOriUp() {

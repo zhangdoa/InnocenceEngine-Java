@@ -3,7 +3,6 @@ package com.base.engine.audio;
 import java.util.Scanner;
 
 import com.base.engine.core.AudioEngine;
-import com.base.engine.math.Vector3f;
 
 public class AudioTest {
 
@@ -36,16 +35,6 @@ public class AudioTest {
 			// Pressing 'h' will pause the sample.
 			case 'h':
 				audioSource.pause();
-				break;
-
-			case 'a':
-
-				audioSource.setPos(new Vector3f(0.3f, 0.0f, 0.0f));
-				break;
-
-			case 'd':
-
-				audioSource.setPos(new Vector3f(-0.3f, 0.0f, 0.0f));
 				break;
 
 			}

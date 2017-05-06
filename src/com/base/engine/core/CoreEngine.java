@@ -5,8 +5,6 @@ import com.base.engine.rendering.Window;
 public class CoreEngine {
 	private boolean isRunning;
 	private Game game;
-	private int width;
-	private int height;
 	private double frameTime;
 	private RenderingEngine renderingEngine;
 	private AudioEngine audioEngine;
@@ -82,7 +80,8 @@ public class CoreEngine {
 			if (render) {
 				renderingEngine.render(game.getRootObject());
 				Window.render();
-				audioEngine.update(renderingEngine.getMainCamera().getPos());
+				audioEngine.update(renderingEngine.getMainCamera().getPos(),
+						renderingEngine.getMainCamera().getForward(), renderingEngine.getMainCamera().getUp());
 				frames++;
 			} else {
 				try {

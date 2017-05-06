@@ -16,12 +16,12 @@ public class AudioSource {
 	private IntBuffer buffer;
 	private IntBuffer source;
 
+	private Vector3f pos;
+	private Vector3f vel;
+
 	public float gainModulator;
 	public float pitchModulator;
 	public int loop;
-
-	private Vector3f pos;
-	private Vector3f vel;
 
 	public AudioSource() {
 		buffer = BufferUtils.createIntBuffer(1);
@@ -36,11 +36,11 @@ public class AudioSource {
 		pos = new Vector3f(0.0f, 0.0f, 0.0f);
 		vel = new Vector3f(0.0f, 0.0f, 0.0f);
 
-		initSource();
+		update();
 
 	}
 
-	private void initSource() {
+	public void update() {
 		AL10.alSourcef(source.get(0), AL10.AL_GAIN, gainModulator);
 		AL10.alSourcef(source.get(0), AL10.AL_PITCH, pitchModulator);
 		AL10.alSource3f(source.get(0), AL10.AL_POSITION, pos.getX(), pos.getY(), pos.getZ());
@@ -83,7 +83,6 @@ public class AudioSource {
 
 	public void setGainModulator(float gainModulator) {
 		this.gainModulator = gainModulator;
-		AL10.alSourcef(source.get(0), AL10.AL_GAIN, gainModulator);
 	}
 
 	public float getPitchModulator() {
@@ -92,7 +91,6 @@ public class AudioSource {
 
 	public void setPitchModulator(float pitchModulator) {
 		this.pitchModulator = pitchModulator;
-		AL10.alSourcef(source.get(0), AL10.AL_PITCH, pitchModulator);
 	}
 
 	public int getLoop() {
@@ -101,7 +99,6 @@ public class AudioSource {
 
 	public void setLoop(int loop) {
 		this.loop = loop;
-		AL10.alSourcei(source.get(0), AL10.AL_LOOPING, loop);
 	}
 
 	public Vector3f getPos() {
@@ -110,7 +107,6 @@ public class AudioSource {
 
 	public void setPos(Vector3f pos) {
 		this.pos = pos;
-		AL10.alSource3f(source.get(0), AL10.AL_POSITION, pos.getX(), pos.getY(), pos.getZ());
 	}
 
 	public Vector3f getVel() {
@@ -119,7 +115,6 @@ public class AudioSource {
 
 	public void setVel(Vector3f vel) {
 		this.vel = vel;
-		AL10.alSource3f(source.get(0), AL10.AL_VELOCITY, vel.getX(), vel.getY(), vel.getZ());
 	}
 
 }

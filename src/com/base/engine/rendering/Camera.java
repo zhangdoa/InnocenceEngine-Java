@@ -1,7 +1,6 @@
 package com.base.engine.rendering;
 
 import com.base.engine.core.Input;
-import com.base.engine.core.Time;
 import com.base.engine.math.Matrix4f;
 import com.base.engine.math.Vector2f;
 import com.base.engine.math.Vector3f;
@@ -40,7 +39,6 @@ public class Camera {
 	public void input(float delta) {
 		float sensitivity = 0.1f;
 		float movAmt = 10 * delta;
-		float rotAmt = (float) (100 * Time.getDelta());
 
 		if (Input.getKey(Input.KEY_ESCAPE)) {
 			Input.SetCursor(true);
@@ -79,13 +77,6 @@ public class Camera {
 			if (rotY || rotX)
 				Input.SetMousePosition(new Vector2f(Window.getWidth() / 2, Window.getHeight() / 2));
 		}
-
-		/*
-		 * if (Input.getKey(Input.KEY_UP)) rotateX(-rotAmt); if
-		 * (Input.getKey(Input.KEY_DOWN)) rotateX(rotAmt); if
-		 * (Input.getKey(Input.KEY_LEFT)) rotateY(-rotAmt); if
-		 * (Input.getKey(Input.KEY_RIGHT)) rotateY(rotAmt);
-		 */
 
 	}
 

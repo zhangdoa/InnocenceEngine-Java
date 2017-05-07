@@ -1,4 +1,4 @@
-package com.engine.components;
+package com.base.engine.components;
 
 import com.base.engine.math.Vector3f;
 import com.base.engine.rendering.ForwardSpot;

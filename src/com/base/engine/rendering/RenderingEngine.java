@@ -27,9 +27,9 @@ import static org.lwjgl.opengl.GL32.GL_DEPTH_CLAMP;
 
 import java.util.ArrayList;
 
+import com.base.engine.components.BaseLight;
 import com.base.engine.core.GameObject;
 import com.base.engine.math.Vector3f;
-import com.engine.components.BaseLight;
 
 public class RenderingEngine {
 	private Camera mainCamera;

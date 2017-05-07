@@ -1,9 +1,9 @@
 package com.base.engine.rendering;
 
+import com.base.engine.components.BaseLight;
+import com.base.engine.components.DirectionalLight;
 import com.base.engine.math.Matrix4f;
 import com.base.engine.math.Transform;
-import com.engine.components.BaseLight;
-import com.engine.components.DirectionalLight;
 
 public class ForwardDirectional extends Shader {
 	private static final ForwardDirectional instance = new ForwardDirectional();

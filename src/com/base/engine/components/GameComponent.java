@@ -1,4 +1,4 @@
-package com.engine.components;
+package com.base.engine.components;
 
 import com.base.engine.math.Transform;
 import com.base.engine.rendering.RenderingEngine;

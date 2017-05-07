@@ -1,6 +1,10 @@
 package com.base.game;
 
 import com.base.engine.audio.AudioSource;
+import com.base.engine.components.DirectionalLight;
+import com.base.engine.components.MeshRenderer;
+import com.base.engine.components.PointLight;
+import com.base.engine.components.SpotLight;
 import com.base.engine.core.Game;
 import com.base.engine.core.GameObject;
 import com.base.engine.math.Vector2f;
@@ -9,10 +13,6 @@ import com.base.engine.rendering.Material;
 import com.base.engine.rendering.Mesh;
 import com.base.engine.rendering.Texture;
 import com.base.engine.rendering.Vertex;
-import com.engine.components.DirectionalLight;
-import com.engine.components.MeshRenderer;
-import com.engine.components.PointLight;
-import com.engine.components.SpotLight;
 
 public class TestGame extends Game {
 	private GameObject planeObject;

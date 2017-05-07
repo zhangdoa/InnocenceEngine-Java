@@ -2,10 +2,10 @@ package com.base.engine.core;
 
 import java.util.ArrayList;
 
+import com.base.engine.components.GameComponent;
 import com.base.engine.math.Transform;
 import com.base.engine.rendering.RenderingEngine;
 import com.base.engine.rendering.Shader;
-import com.engine.components.GameComponent;
 
 public class GameObject {
 	private ArrayList<GameObject> children;

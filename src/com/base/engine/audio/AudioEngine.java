@@ -1,6 +1,5 @@
-package com.base.engine.core;
+package com.base.engine.audio;
 
-import com.base.engine.audio.Listener;
 import com.base.engine.math.Vector3f;
 
 import org.lwjgl.LWJGLException;

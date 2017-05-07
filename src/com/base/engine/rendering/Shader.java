@@ -29,7 +29,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.HashMap;
 
-import com.base.engine.core.RenderingEngine;
 import com.base.engine.core.Util;
 import com.base.engine.math.Matrix4f;
 import com.base.engine.math.Transform;

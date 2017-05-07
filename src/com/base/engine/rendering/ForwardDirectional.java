@@ -2,6 +2,8 @@ package com.base.engine.rendering;
 
 import com.base.engine.math.Matrix4f;
 import com.base.engine.math.Transform;
+import com.engine.components.BaseLight;
+import com.engine.components.DirectionalLight;
 
 public class ForwardDirectional extends Shader {
 	private static final ForwardDirectional instance = new ForwardDirectional();
@@ -50,17 +52,17 @@ public class ForwardDirectional extends Shader {
 
 		setUniform("eyePos", getRenderingEngine().getMainCamera().getPos());
 
-		setUniform("directionalLight", getRenderingEngine().getDirectionalLight());
+		setUniformDirectionalLight("directionalLight", (DirectionalLight) getRenderingEngine().getActiveLight());
 
 	}
 
-	public void setUniform(String uniformName, BaseLight baseLight) {
+	public void setUniformBaseLight(String uniformName, BaseLight baseLight) {
 		setUniform(uniformName + ".color", baseLight.getColor());
 		setUniformf(uniformName + ".intensity", baseLight.getIntensity());
 	}
 
-	public void setUniform(String uniformName, DirectionalLight directionalLight) {
-		setUniform(uniformName + ".base", directionalLight.getBase());
+	public void setUniformDirectionalLight(String uniformName, DirectionalLight directionalLight) {
+		setUniformBaseLight(uniformName + ".base", directionalLight);
 		setUniform(uniformName + ".direction", directionalLight.getDirection());
 	}
 

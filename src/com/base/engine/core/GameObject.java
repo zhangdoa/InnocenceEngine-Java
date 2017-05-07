@@ -3,7 +3,9 @@ package com.base.engine.core;
 import java.util.ArrayList;
 
 import com.base.engine.math.Transform;
+import com.base.engine.rendering.RenderingEngine;
 import com.base.engine.rendering.Shader;
+import com.engine.components.GameComponent;
 
 public class GameObject {
 	private ArrayList<GameObject> children;
@@ -50,5 +52,13 @@ public class GameObject {
 
 	public Transform getTransform() {
 		return transform;
+	}
+
+	public void addToRenderingEngine(RenderingEngine renderingEngine) {
+		for (GameComponent component : components)
+			component.addToRenderingEngine(renderingEngine);
+
+		for (GameObject child : children)
+			child.addToRenderingEngine(renderingEngine);
 	}
 }

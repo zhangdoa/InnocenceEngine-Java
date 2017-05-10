@@ -52,12 +52,12 @@ public class TestGame extends Game {
 
 		directionalLightObject.addComponent(
 				new DirectionalLight(new Vector3f(0.2f, 0.3f, 0.1f), 1.0f, new Vector3f(1.0f, 0.5f, 0.5f)));
-		pointLightObject1.addComponent(
-				new PointLight(new Vector3f(1.0f, 0.5f, 0), 0.8f, 0, 0, 1, new Vector3f(-2, 0, 5f), 5.0f));
-		pointLightObject2
-				.addComponent(new PointLight(new Vector3f(0, 0.5f, 1.0f), 0.8f, 0, 0, 1, new Vector3f(2, 0, 7f), 5.0f));
-		spotLightObject1.addComponent(new SpotLight(new Vector3f(0, 1.0f, 1.0f), 0.8f, 0, 0, 0.1f,
-				new Vector3f(-2, 0, 5f), 50.0f, new Vector3f(1, 1, 0.5f), 0.7f));
+		pointLightObject1.addComponent(new PointLight(new Vector3f(1.0f, 0.5f, 0), 0.8f, new Vector3f(0, 0, 1)));
+		pointLightObject2.addComponent(new PointLight(new Vector3f(0, 0.5f, 1.0f), 0.8f, new Vector3f(0, 0, 1)));
+		spotLightObject1.addComponent(new SpotLight(new Vector3f(0, 1.0f, 1.0f), 0.8f, new Vector3f(0, 0, 0.1f),
+				new Vector3f(1, 0, 0), 0.7f));
+
+		spotLightObject1.getTransform().setPos(5, 0, 5);
 
 		getRootObject().addChind(planeObject);
 		getRootObject().addChind(directionalLightObject);

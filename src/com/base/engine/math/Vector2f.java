@@ -9,6 +9,10 @@ public class Vector2f {
 		this.y = y;
 	}
 
+	public float max() {
+		return Math.max(x, y);
+	}
+
 	public float length() {
 		return (float) Math.sqrt(x * x + y * y);
 	}
@@ -71,6 +75,7 @@ public class Vector2f {
 		return new Vector2f(x / r, y / r);
 	}
 
+	@Override
 	public String toString() {
 		return "(" + x + ", " + y + ")";
 	}

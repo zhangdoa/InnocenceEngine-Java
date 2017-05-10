@@ -11,6 +11,10 @@ public class Vector3f {
 		this.z = z;
 	}
 
+	public float max() {
+		return Math.max(x, Math.max(y, z));
+	}
+
 	public float dot(Vector3f r) {
 		return x * r.getX() + y * r.getY() + z * r.getZ();
 	}

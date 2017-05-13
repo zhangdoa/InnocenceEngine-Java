@@ -19,6 +19,12 @@ public class Vector3f {
 		return x * r.getX() + y * r.getY() + z * r.getZ();
 	}
 
+	public void set(float x, float y, float z) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
+
 	public Vector3f cross(Vector3f r) {
 		float x_ = y * r.getZ() - z * r.getY();
 		float y_ = z * r.getX() - x * r.getZ();
@@ -37,24 +43,18 @@ public class Vector3f {
 		return (float) Math.sqrt(x * x + y * y + z * z);
 	}
 
-	public Vector3f rotate(float angle, Vector3f axis) {
-		float sinHalfAngle = (float) Math.sin(Math.toRadians(angle / 2));
-		float cosHalfAngle = (float) Math.cos(Math.toRadians(angle / 2));
+	public Vector3f rotate(Vector3f axis, float angle) {
+		float sinAngle = -(float) Math.sin(angle);
+		float cosAngle = (float) Math.cos(angle);
+		return this.cross(axis.mul(sinAngle)).add((this.mul(cosAngle)).add(axis.mul(this.dot(axis.mul(1 - cosAngle)))));
+	}
 
-		float rX = axis.getX() * sinHalfAngle;
-		float rY = axis.getY() * sinHalfAngle;
-		float rZ = axis.getZ() * sinHalfAngle;
-		float rW = cosHalfAngle;
-
-		Quaternion rotation = new Quaternion(rX, rY, rZ, rW);
+	public Vector3f rotate(Quaternion rotation) {
 		Quaternion conjugate = rotation.conjugate();
+
 		Quaternion w = rotation.mul(this).mul(conjugate);
 
-		x = w.getX();
-		y = w.getY();
-		z = w.getZ();
-
-		return this;
+		return new Vector3f(w.getX(), w.getY(), w.getZ());
 	}
 
 	public Vector3f lerp(Vector3f dest, float lerpFactor) {

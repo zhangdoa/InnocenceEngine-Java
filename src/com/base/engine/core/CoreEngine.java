@@ -65,7 +65,6 @@ public class CoreEngine {
 				}
 
 				game.input((float) frameTime);
-				renderingEngine.input((float) frameTime);
 				audioEngine.input((float) frameTime);
 
 				Input.update();
@@ -82,8 +81,9 @@ public class CoreEngine {
 			if (render) {
 				renderingEngine.render(game.getRootObject());
 				Window.render();
-				audioEngine.update(renderingEngine.getMainCamera().getPos(),
-						renderingEngine.getMainCamera().getForward(), renderingEngine.getMainCamera().getUp());
+				audioEngine.update(renderingEngine.getMainCamera().getTransform().getPos(),
+						renderingEngine.getMainCamera().getTransform().getRot().getForward(),
+						renderingEngine.getMainCamera().getTransform().getRot().getUp());
 				frames++;
 			} else {
 				try {

@@ -19,10 +19,16 @@ public class Vector3f {
 		return x * r.getX() + y * r.getY() + z * r.getZ();
 	}
 
-	public void set(float x, float y, float z) {
+	public Vector3f set(float x, float y, float z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		return this;
+	}
+
+	public Vector3f set(Vector3f r) {
+		set(r.getX(), r.getY(), r.getZ());
+		return this;
 	}
 
 	public Vector3f cross(Vector3f r) {

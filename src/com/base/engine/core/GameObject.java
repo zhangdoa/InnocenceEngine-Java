@@ -11,15 +11,18 @@ public class GameObject {
 	private ArrayList<GameObject> children;
 	private ArrayList<GameComponent> components;
 	private Transform transform;
+	private boolean printInfo;
 
 	public GameObject() {
 		children = new ArrayList<GameObject>();
 		components = new ArrayList<GameComponent>();
 		transform = new Transform();
+		printInfo = false;
 	}
 
 	public void addChind(GameObject child) {
 		children.add(child);
+		child.getTransform().setParent(transform);
 	}
 
 	public GameObject addComponent(GameComponent component) {
@@ -30,6 +33,8 @@ public class GameObject {
 	}
 
 	public void input(float delta) {
+		transform.update();
+
 		for (GameComponent component : components)
 			component.input(delta);
 
@@ -43,6 +48,10 @@ public class GameObject {
 
 		for (GameObject child : children)
 			child.update(delta);
+
+		if (printInfo) {
+			printInfo();
+		}
 	}
 
 	public void render(Shader shader) {
@@ -51,6 +60,18 @@ public class GameObject {
 
 		for (GameObject child : children)
 			child.render(shader);
+	}
+
+	public void setPrintInfo(boolean printInfo) {
+		this.printInfo = printInfo;
+	}
+
+	public void printInfo() {
+		for (GameComponent component : components)
+			component.printInfo();
+
+		for (GameObject child : children)
+			child.printInfo();
 	}
 
 	public Transform getTransform() {

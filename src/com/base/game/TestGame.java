@@ -18,7 +18,9 @@ import com.base.engine.rendering.Vertex;
 import com.base.engine.rendering.Window;
 
 public class TestGame extends Game {
-	private GameObject planeObject;
+	private GameObject planeObject1;
+	private GameObject planeObject2;
+	private GameObject planeObject3;
 
 	private GameObject directionalLightObject;
 	private GameObject pointLightObject1;
@@ -30,7 +32,7 @@ public class TestGame extends Game {
 	@Override
 	public void init() {
 		// Mesh mesh = new Mesh("deer.obj");
-		planeObject = new GameObject();
+		planeObject1 = new GameObject();
 
 		float fieldDepth = 10.0f;
 		float fieldWidth = 10.0f;
@@ -43,38 +45,43 @@ public class TestGame extends Game {
 
 		int[] indices = new int[] { 0, 1, 2, 2, 1, 3 };
 
-		Mesh mesh = new Mesh(vertices, indices, true);
+		Mesh mesh1 = new Mesh(vertices, indices, true);
 		Material material = new Material(new Texture("test.png"), new Vector3f(1, 1, 1), 1, 8);
-		MeshRenderer meshRenderer = new MeshRenderer(mesh, material);
+		MeshRenderer meshRenderer = new MeshRenderer(mesh1, material);
 
-		planeObject.addComponent(meshRenderer);
-		planeObject.getTransform().getPos().set(0, -1, 5);
+		planeObject1.addComponent(meshRenderer);
+		planeObject1.getTransform().getPos().set(0, -1, 5);
 
+		planeObject2 = new GameObject();
+		planeObject3 = new GameObject();
 		directionalLightObject = new GameObject();
 		pointLightObject1 = new GameObject();
 		pointLightObject2 = new GameObject();
 		spotLightObject1 = new GameObject();
-
-		directionalLightObject.addComponent(
-				new DirectionalLight(new Vector3f(0.2f, 0.3f, 0.1f), 1.0f, new Vector3f(1.0f, 0.5f, 0.5f)));
-		pointLightObject1.addComponent(new PointLight(new Vector3f(1.0f, 0.5f, 0), 0.8f, new Vector3f(0, 0, 1)));
-		pointLightObject2.addComponent(new PointLight(new Vector3f(0, 0.5f, 1.0f), 0.8f, new Vector3f(0, 0, 1)));
-		spotLightObject1.addComponent(new SpotLight(new Vector3f(0, 1.0f, 1.0f), 0.8f, new Vector3f(0, 0, 0.1f), 0.7f));
-
-		spotLightObject1.getTransform().getPos().set(5, 0, 5);
-		spotLightObject1.getTransform()
-				.setRot(new Quaternion().initRotation(new Vector3f(0, 1, 0), (float) Math.toRadians(90.0f)));
-
 		cameraObject1 = new GameObject();
+
+		directionalLightObject.addComponent(new DirectionalLight(new Vector3f(0.2f, 1.0f, 0.5f), 0.5f));
+		pointLightObject1.addComponent(new PointLight(new Vector3f(0.2f, 0.4f, 0.7f), 3.0f, new Vector3f(0, 0, 1)));
+		pointLightObject2.addComponent(new PointLight(new Vector3f(0, 0.5f, 0.7f), 3.0f, new Vector3f(0, 0, 1)));
+		spotLightObject1
+				.addComponent(new SpotLight(new Vector3f(1.0f, 0.5f, 0.2f), 3.0f, new Vector3f(0, 0, 0.1f), 0.7f));
+
 		cameraObject1.addComponent(new Camera((float) Math.toRadians(70.0f),
 				(float) Window.getWidth() / (float) Window.getHeight(), 0.1f, 1000));
 
-		getRootObject().addChind(planeObject);
+		getRootObject().addChind(planeObject1);
 		getRootObject().addChind(directionalLightObject);
 		getRootObject().addChind(pointLightObject1);
 		getRootObject().addChind(pointLightObject2);
 		getRootObject().addChind(spotLightObject1);
 		getRootObject().addChind(cameraObject1);
+
+		directionalLightObject.getTransform()
+				.setRot(new Quaternion(new Vector3f(1.0f, 0, 0), (float) Math.toRadians(-45)));
+		pointLightObject1.getTransform().getPos().set(3, 0, 0);
+		pointLightObject2.getTransform().getPos().set(16, 0, 0);
+		spotLightObject1.getTransform().getPos().set(7, 0, 0);
+		spotLightObject1.getTransform().setRot(new Quaternion(new Vector3f(0, 1, 0), (float) Math.toRadians(90.0f)));
 
 		AudioSource audioSource = new AudioSource();
 		audioSource.play("BMV1007.wav");

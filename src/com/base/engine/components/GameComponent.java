@@ -18,6 +18,9 @@ public abstract class GameComponent {
 	public void render(Shader shader) {
 	};
 
+	public void printInfo() {
+	};
+
 	public void setParent(GameObject parent) {
 		this.parent = parent;
 	};

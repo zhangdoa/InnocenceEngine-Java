@@ -2,7 +2,6 @@ package com.base.engine.components;
 
 import com.base.engine.core.Input;
 import com.base.engine.math.Matrix4f;
-import com.base.engine.math.Quaternion;
 import com.base.engine.math.Vector2f;
 import com.base.engine.math.Vector3f;
 import com.base.engine.rendering.RenderingEngine;
@@ -10,9 +9,7 @@ import com.base.engine.rendering.Window;
 
 public class Camera extends GameComponent {
 
-	public static final Vector3f xAxis = new Vector3f(1, 0, 0);
 	public static final Vector3f yAxis = new Vector3f(0, 1, 0);
-	public static final Vector3f zAxis = new Vector3f(0, 0, 1);
 
 	private Matrix4f projection;
 
@@ -21,19 +18,21 @@ public class Camera extends GameComponent {
 	}
 
 	public Matrix4f getViewProjection() {
-		Matrix4f cameraRotation = getTransform().getRot().toRotationMatrix();
-		Matrix4f cameraTranslation = new Matrix4f().initTranslation(-getTransform().getPos().getX(),
-				-getTransform().getPos().getY(), -getTransform().getPos().getZ());
+		Matrix4f cameraRotation = getTransform().getTransformedRot().conjugate().toRotationMatrix();
+		Vector3f cameraPos = getTransform().getTransformedPos().mul(-1);
+
+		Matrix4f cameraTranslation = new Matrix4f().initTranslation(cameraPos.getX(), cameraPos.getY(),
+				cameraPos.getZ());
 		return projection.mul(cameraRotation.mul(cameraTranslation));
 	}
-
-	boolean mouseLocked = false;
-	Vector2f centerPosition = new Vector2f(Window.getWidth() / 2, Window.getHeight() / 2);
 
 	@Override
 	public void addToRenderingEngine(RenderingEngine renderingEngine) {
 		renderingEngine.addCamera(this);
 	}
+
+	boolean mouseLocked = false;
+	Vector2f centerPosition = new Vector2f(Window.getWidth() / 2, Window.getHeight() / 2);
 
 	@Override
 	public void input(float delta) {
@@ -70,18 +69,25 @@ public class Camera extends GameComponent {
 			boolean rotX = deltaPos.getY() != 0;
 
 			if (rotY)
-				getTransform().setRot(getTransform().getRot().mul(
-						new Quaternion().initRotation(yAxis, (float) Math.toRadians(deltaPos.getX() * sensitivity)))
-						.normalized());
+
+				getTransform().rotate(yAxis, (float) Math.toRadians(deltaPos.getX() * sensitivity));
+
 			if (rotX)
-				getTransform().setRot(
-						getTransform().getRot().mul(new Quaternion().initRotation(getTransform().getRot().getRight(),
-								(float) Math.toRadians(-deltaPos.getY() * sensitivity))).normalized());
+
+				getTransform().rotate(getTransform().getRot().getRight(),
+						(float) Math.toRadians(-deltaPos.getY() * sensitivity));
 
 			if (rotY || rotX)
 				Input.SetMousePosition(new Vector2f(Window.getWidth() / 2, Window.getHeight() / 2));
 		}
 
+	}
+
+	@Override
+	public void printInfo() {
+		System.out.println(getTransform().getTransformedRot().getRight().getX() + ", "
+				+ getTransform().getTransformedRot().getRight().getY() + ", "
+				+ getTransform().getTransformedRot().getRight().getZ());
 	}
 
 	public void move(Vector3f dir, float amt) {

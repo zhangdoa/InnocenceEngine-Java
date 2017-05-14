@@ -9,7 +9,7 @@ My first 3D game engine.
 
 ### Overview
 
-Render and core engine were based on tutorial [3D Game Engine Development Tutorial](https://www.youtube.com/playlist?list=PLEETnX-uPtBXP_B2yupUKlflXBznWIlL5) series, which were made by Youtube user [thebennybox](https://www.youtube.com/user/thebennybox).
+Rendering and core engine were based on tutorial [3D Game Engine Development Tutorial](https://www.youtube.com/playlist?list=PLEETnX-uPtBXP_B2yupUKlflXBznWIlL5) series, which were made by Youtube user [thebennybox](https://www.youtube.com/user/thebennybox).
 
 Audio engine was developed by myself, check [OpenAL](https://openal.org)'s website for more information.
 

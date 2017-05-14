@@ -30,9 +30,9 @@ Resource(image& sound) load with LWJGL.
 
 Test assets were all under CC or other common/ free/ open license which were downloaded from:
 
-[3D models]( https://thefree3dmodels.com)
+[Free3D]( https://thefree3dmodels.com)
 
-[Sounds and music](https://musopen.org)
+[Musopen](https://musopen.org)
 
 
 

@@ -24,13 +24,14 @@ Currently it's 2.9.3.
 [LWJGL 3.0](https://www.lwjgl.org) 
 Only for some OpenAL test stuff.
 
-[slick-util](http://slick.ninjacave.com/slick-util);
+[slick-util](http://slick.ninjacave.com/slick-util)
 A friendly utility lib.
 
 
 Test assets were all under CC or other common/ free/ open license which were downloaded from:
 
 [3D models]( https://thefree3dmodels.com)
+
 [Sounds and music](https://musopen.org)
 
 

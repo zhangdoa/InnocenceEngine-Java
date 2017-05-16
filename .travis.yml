@@ -5,9 +5,9 @@ jdk:
   - openjdk6
   
 before_install:
- - chmod +x gradlew
+  - chmod +x gradlew
  
- before_cache:
+before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 cache:
   directories:

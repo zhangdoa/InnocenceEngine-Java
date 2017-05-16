@@ -11,6 +11,8 @@
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
 
+project.ext.lwjglVersion = "2.9.3"
+
 // In this section you declare where to find the dependencies of your project
 repositories {
     // Use 'jcenter' for resolving your dependencies.
@@ -19,8 +21,10 @@ repositories {
 }
 
 dependencies {
-    compile 'org.lwjgl.lwjgl:lwjgl:2.9.3'
-    compile 'org.lwjgl.lwjgl:lwjgl_util:2.9.3'
+	compile 'org.lwjgl:lwjgl:${lwjglVersion}'
+	compile 'org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-windows'
+	compile 'org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-linux'
+	compile 'org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-osx'
     compile 'org.newdawn.slick:slick_util:1.0.1'
 }
 

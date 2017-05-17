@@ -9,6 +9,7 @@ jdk:
   
 before_install:
   - chmod +x gradlew
+  - chmod +x gradle/wrapper/gradle-wrapper.jar
  
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock

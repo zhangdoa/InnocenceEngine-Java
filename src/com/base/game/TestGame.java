@@ -20,7 +20,6 @@ import com.base.engine.rendering.Window;
 public class TestGame extends Game {
 	private GameObject planeObject1;
 	private GameObject planeObject2;
-	private GameObject planeObject3;
 
 	private GameObject directionalLightObject;
 	private GameObject pointLightObject1;
@@ -31,7 +30,7 @@ public class TestGame extends Game {
 
 	@Override
 	public void init() {
-		// Mesh mesh = new Mesh("deer.obj");
+
 		planeObject1 = new GameObject();
 
 		float fieldDepth = 10.0f;
@@ -46,14 +45,36 @@ public class TestGame extends Game {
 		int[] indices = new int[] { 0, 1, 2, 2, 1, 3 };
 
 		Mesh mesh1 = new Mesh(vertices, indices, true);
-		Material material = new Material(new Texture("test.png"), new Vector3f(1, 1, 1), 1, 8);
-		MeshRenderer meshRenderer = new MeshRenderer(mesh1, material);
 
-		planeObject1.addComponent(meshRenderer);
+		Material matertial1 = new Material();// new Material(new
+												// Texture("test.png"), new
+												// Vector3f(1, 1, 1), 1, 8);
+
+		matertial1.addTexture("diffuse", new Texture("test.png"));
+		matertial1.addFloat("specularIntensity", 1.0f);
+		matertial1.addFloat("specularPower", 8.0f);
+
+		MeshRenderer meshRenderer1 = new MeshRenderer(mesh1, matertial1);
+
+		planeObject1.addComponent(meshRenderer1);
 		planeObject1.getTransform().getPos().set(0, -1, 5);
 
 		planeObject2 = new GameObject();
-		planeObject3 = new GameObject();
+
+		Mesh mesh2 = new Mesh("deer.obj");
+
+		Material matertial2 = new Material();
+
+		matertial2.addTexture("diffuse", new Texture("test.png"));
+		matertial2.addFloat("specularIntensity", 1.0f);
+		matertial2.addFloat("specularPower", 8.0f);
+
+		MeshRenderer meshRenderer2 = new MeshRenderer(mesh2, matertial2);
+
+		planeObject2.addComponent(meshRenderer2);
+		planeObject2.getTransform().getPos().set(7, -1, 15);
+		planeObject2.getTransform().getScale().set(0.01f, 0.01f, 0.01f);
+
 		directionalLightObject = new GameObject();
 		pointLightObject1 = new GameObject();
 		pointLightObject2 = new GameObject();
@@ -69,18 +90,19 @@ public class TestGame extends Game {
 		cameraObject1.addComponent(new Camera((float) Math.toRadians(70.0f),
 				(float) Window.getWidth() / (float) Window.getHeight(), 0.1f, 1000));
 
-		getRootObject().addChind(planeObject1);
-		getRootObject().addChind(directionalLightObject);
-		getRootObject().addChind(pointLightObject1);
-		getRootObject().addChind(pointLightObject2);
-		getRootObject().addChind(spotLightObject1);
-		getRootObject().addChind(cameraObject1);
+		addObject(planeObject1);
+		addObject(planeObject2);
+		addObject(directionalLightObject);
+		addObject(pointLightObject1);
+		addObject(pointLightObject2);
+		addObject(spotLightObject1);
+		addObject(cameraObject1);
 
 		directionalLightObject.getTransform()
 				.setRot(new Quaternion(new Vector3f(1.0f, 0, 0), (float) Math.toRadians(-45)));
-		pointLightObject1.getTransform().getPos().set(3, 0, 0);
-		pointLightObject2.getTransform().getPos().set(16, 0, 0);
-		spotLightObject1.getTransform().getPos().set(7, 0, 0);
+		pointLightObject1.getTransform().getPos().set(3, 0, 15);
+		pointLightObject2.getTransform().getPos().set(16, 0, 15);
+		spotLightObject1.getTransform().getPos().set(7, 0, 15);
 		spotLightObject1.getTransform().setRot(new Quaternion(new Vector3f(0, 1, 0), (float) Math.toRadians(90.0f)));
 
 		AudioSource audioSource = new AudioSource();

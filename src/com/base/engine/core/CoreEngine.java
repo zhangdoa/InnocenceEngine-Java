@@ -79,7 +79,7 @@ public class CoreEngine {
 			}
 
 			if (render) {
-				renderingEngine.render(game.getRootObject());
+				game.render(renderingEngine);
 				Window.render();
 				audioEngine.update(renderingEngine.getMainCamera().getTransform().getPos(),
 						renderingEngine.getMainCamera().getTransform().getRot().getForward(),

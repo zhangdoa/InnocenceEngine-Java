@@ -35,7 +35,6 @@ import com.base.engine.math.Transform;
 import com.base.engine.math.Vector3f;
 
 public class Shader {
-	private RenderingEngine renderingEngine;
 	private int program;
 	private HashMap<String, Integer> uniforms;
 
@@ -71,7 +70,7 @@ public class Shader {
 		glUseProgram(program);
 	}
 
-	public void updateUniforms(Transform transform, Material material) {
+	public void updateUniforms(Transform transform, Material material, RenderingEngine renderingEngine) {
 
 	}
 
@@ -115,6 +114,7 @@ public class Shader {
 		glBindAttribLocation(program, location, attributeName);
 	}
 
+	@SuppressWarnings("deprecation")
 	public void compileShader() {
 		glLinkProgram(program);
 		if (glGetProgram(program, GL_LINK_STATUS) == 0) {
@@ -130,6 +130,7 @@ public class Shader {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void addProgram(String text, int type) {
 		int shader = glCreateShader(type);
 
@@ -165,11 +166,4 @@ public class Shader {
 		glUniformMatrix4(uniforms.get(uniformName), true, Util.createFlippedBuffer(value));
 	}
 
-	public void setRenderingEngine(RenderingEngine renderingEngine) {
-		this.renderingEngine = renderingEngine;
-	}
-
-	public RenderingEngine getRenderingEngine() {
-		return renderingEngine;
-	}
 }

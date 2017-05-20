@@ -1,5 +1,7 @@
 package com.base.engine.core;
 
+import com.base.engine.rendering.RenderingEngine;
+
 public abstract class Game {
 	private GameObject root;
 
@@ -14,7 +16,15 @@ public abstract class Game {
 		getRootObject().update(delta);
 	}
 
-	public GameObject getRootObject() {
+	public void render(RenderingEngine renderingEngine) {
+		renderingEngine.render(root);
+	}
+
+	public void addObject(GameObject object) {
+		getRootObject().addChind(object);
+	}
+
+	private GameObject getRootObject() {
 		if (root == null)
 			root = new GameObject();
 		return root;

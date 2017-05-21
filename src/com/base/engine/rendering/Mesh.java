@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import com.base.engine.core.Util;
 import com.base.engine.math.Vector3f;
+import com.base.engine.rendering.meshLoading.OBJModel;
 
 public class Mesh {
 	private int vbo;
@@ -67,6 +68,8 @@ public class Mesh {
 	private Mesh loadMesh(String fileName) {
 		String[] splitArray = fileName.split("\\.");
 		String ext = splitArray[splitArray.length - 1];
+
+		OBJModel test = new OBJModel("./res/models/" + fileName);
 
 		if (!ext.equals("obj")) {
 			System.err.println("Error: File format not supported for : " + ext + " types.");

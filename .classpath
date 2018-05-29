@@ -2,10 +2,14 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="D:/ProgrammingLearning/GameEngine/Tools/Libraries/slick-util/slick-util.jar" sourcepath="D:/ProgrammingLearning/GameEngine/Tools/Libraries/slick-util/slick-util-src"/>
-	<classpathentry kind="lib" path="D:/ProgrammingLearning/GameEngine/Tools/Libraries/lwjgl-2.9.3/jar/lwjgl.jar">
+	<classpathentry kind="lib" path="external-lib/slick/slick.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="D:/ProgrammingLearning/GameEngine/Tools/Libraries/lwjgl-2.9.3/native/windows"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="InnocenceEngine/external-lib/slick/native-lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="external-lib/lwjgl/lwjgl.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="InnocenceEngine/external-lib/lwjgl/native-lib"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>

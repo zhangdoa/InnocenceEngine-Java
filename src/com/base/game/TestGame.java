@@ -73,7 +73,7 @@ public class TestGame extends Game {
 
 		planeObject2.addComponent(meshRenderer2);
 		planeObject2.getTransform().getPos().set(7, -1, 15);
-		planeObject2.getTransform().getScale().set(0.01f, 0.01f, 0.01f);
+		planeObject2.getTransform().getScale().set(0.001f, 0.001f, 0.001f);
 
 		directionalLightObject = new GameObject();
 		pointLightObject1 = new GameObject();
